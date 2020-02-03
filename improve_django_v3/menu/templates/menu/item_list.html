@@ -1,0 +1,11 @@
+{% extends 'index.html ' %}
+
+{% block content %}
+{% for item in items %}
+    <div>
+        <h1><a href="{% url 'item_detail' pk=item.pk %}">{{ item.title }}</a></h1> #item.name
+        <p>{{ item.description|linebreaks }}</p>
+        <p>published: {{ item.published_date }}</p> #item_created_date
+    </div>
+{% endfor %}
+{% endblock %}

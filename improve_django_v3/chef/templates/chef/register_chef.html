@@ -1,0 +1,9 @@
+{% extends 'index.html '%}
+
+{% block content %}
+	<form>	
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button>Register</button>
+	</form>
+{% endblock %}
