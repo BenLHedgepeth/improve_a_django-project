@@ -22,7 +22,7 @@ def register_chef(request):
             except User.DoesNotExist:
                 user = new_user_form.save()
                 login(request, user)
-                messages.info(f"Logged in: Chef {user}")
+                messages.info(f"Logged in: {user}")
                 return HttpResponseRedirect(reverse("menu:menu_list"))
             else:
                 if stored_password:
