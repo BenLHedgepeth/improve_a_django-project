@@ -1,24 +1,26 @@
 {% extends 'index.html' %}
 
 {% block content %}
-<div class="post">
     {% for menu in menus %}
-        <div class="menu">
+        <div class="menu menu_details">
             <h1>
                 {% if user.is_authenticated %}
-                    <a class="btn btn-default" href="{% url 'menu:menu_edit' pk=menu.pk %}">
-                        <span class="glyphicon glyphicon-pencil"></span>
+                    <a class="" href="{% url 'menu:menu_edit' pk=menu.pk %}">
+                        <span class=""></span>
                     </a>
+                    <!-- <a class="btn btn-default" href="{% url 'menu:menu_edit' pk=menu.pk %}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a> -->
                 {% endif %}
                 <a href="{{ menu.get_absolute_url }}">{{ menu.season }}</a>
             </h1>
             <p>{{ menu.items.all|join:", "}}</p>
             {% if menu.expiration_date %}
-                <div class="date">
-                    Expires on: {{ menu.expiration_date }}
-                </div>
+                <p class="date">Expires on: {{ menu.expiration_date|date:"SHORT_DATE_FORMAT" }}</p>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <a href="">Edit Menu</a> <!-- possibly revise? -->
             {% endif %}
         </div>
     {% endfor %}
-</div>
 {% endblock %}

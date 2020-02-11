@@ -3,31 +3,56 @@
 <html>
     <head>
         <title>Soda Fountain</title>
+        <link href="https://fonts.googleapis.com/css?family=Spicy+Rice&display=swap" rel="stylesheet">  
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     </head>
     <body>
-        {% if messages %}
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-        {% endif %}
-        <div class="page-header">
-            {% if user.is_authenticated %}
-                <a href="{% url 'menu_new' %}" class="top-menu">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </a>
+        <div class="">
+            <h1 class="site_title"><a href="{% url 'menu:menu_list' %}">Soda Fountain</a></h1>
+            {% if messages %}
+                <ul class="list_items">
+                {% for message in messages %}
+                    <li><h2 class="info">{{ message }}</h2></li>
+                {% endfor %}
+                </ul>
             {% endif %}
-            <a class="register_link" href="{% url 'chef:register' %}">Create Account</a>
+            {% if not user.is_authenticated %}
+                <div class="account_options">  
+                    <a href="{% url 'chef:login' %}">Log In</a>
+                    <a class="register_link" href="{% url 'chef:register' %}">Create Account</a>
+                </div>
+            {% else %}
+                <div class="account_options">
+                 <a href="{% url 'menu:menu_new' %}" class="top-menu">
+                    <span>Add Menu</span>
+                </a>
+                <a href="{% url 'chef:logout' %}">Log Out</a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="content_container">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>
+
+<!--  <div class="page-header">
+            {% if not user.is_authenticated %}
+                <a href="{% url 'chef:login' %}">Log In</a>
+                <a class="register_link" href="{% url 'chef:register' %}">Create Account</a>
+            {% else %}
+                 <a href="{% url 'menu:menu_new' %}" class="top-menu">
+                    <span>Add Menu</span>
+                </a>
+                <a href="{% url 'chef:logout' %}">Log Out</a>
+            {% endif %}
             <h1><a href="/">Soda Fountain</a></h1>
         </div>
         <div class="content container">
             <div class="row">
                 <div class="col-md-8">
-                    {% block content %}{% endblock %}
                 </div>
             </div>
-        </div>
-    </body>
-</html>
+        </div> -->

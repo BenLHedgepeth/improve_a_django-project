@@ -1,17 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from django.utils import timezone
+from django.urls import reverse
 from operator import attrgetter
 from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 from .models import Menu
 from .forms import *
 
 def menu_list(request):
     '''Select all menus that have an expiration date
     greater than or equal today. Sort them by'''
+    user = request.user
     menus = Menu.objects.all()
     # all_menus = Menu.objects.all()
     # menus = []
@@ -28,7 +31,7 @@ def menu_detail(request, pk):
     return render(request, 'menu/menu_detail.html', {'menu': menu})
 
 def item_detail(request, pk):
-    item = get_object_or_404(pk=pk)
+    item = get_object_or_404(Item, pk=pk)
     return render(request, 'menu/detail_item.html', {'item': item})
 
 
@@ -40,7 +43,8 @@ def create_new_menu(request):
             menu = form.save(commit=False)
             menu.created_date = timezone.now()
             menu.save() # new menu created
-            return redirect('menu_detail', pk=menu.pk) # display the new menu
+            messages.info(request, f"Menu added: {form.cleaned_data['season']}")
+            return redirect(reverse('menu:menu_detail', kwargs={'pk': menu.pk})) # display the new menu
     else:
         form = MenuForm() # provide a form to create a new menu 
     return render(request, 'menu/menu_edit.html', {'form': form})
@@ -60,3 +64,4 @@ def edit_menu(request, pk):
         'menu': menu,
         'items': items,
         })
+

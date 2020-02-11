@@ -9,3 +9,7 @@ def validate_season(value):
             message='''Specify whether the menu falls within the Summer, Fall, Winter, or Spring.''',
             code='invalid_season'
         )
+
+def validate_meal(value):
+	if value not in ['Breakfast', 'Lunch', 'Dinner']:
+		raise ValidationError("Select Breakfast, Lunch, or Dinner for the meal.")

@@ -1,27 +1,48 @@
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User, AnonymousUser
-from django.core.urlresolvers import reverse
+from django.urls import reverse
+from datetime import datetime
 
-# class TestMenuListView(TestCase):
-
-#     def test_menu_list_view(self):
-#         response = self.client.get(reverse("menu:menu_list"))
-#         self.assertTemplateUsed('menu/list_all_current_menus.html')
+from ..models import Ingredient, Item
 
 
+class TestNewMenuAdded(TestCase):
+    '''Verify that a chef has added a
+    new menu'''
 
-# # class TestNewMenuView(TestCase):
-# # 	'''Verify that a chef is authenticated'''
+    @classmethod
+    def setUpTestData(cls):
+        cls.test_user = User.objects.create_user(
+            username="Masterchef",
+            password="secret"
+        )
+        cls.menu_data = {
+            'season': 'Summer 2020',
+            'items': ['Scrambled Eggs'],
+            'expiration_date': datetime(year=2020, month=7, day=4)
+        }
 
-# # 	@classmethod
-# # 	def setUpTestData(cls):
+        butter = Ingredient.objects.create(name="butter")
+        egg = Ingredient.objects.create(name="egg")
 
-# # 		factory = RequestFactory()
-# # 		users = {
-# # 			'user': User.objects.create_user('test_chef', password="secret"),
-# # 			'anonymous_user': AnonymousUser()
-# # 		}
+        scrambled_eggs = Item.objects.create(
+            name="Scrambled Eggs",
+            description="English-style eggs",
+            chef=cls.test_user,
+            created_date=datetime.now(),
+            standard=True
+        )
+        scrambled_eggs.ingredients.add(egg, butter)
 
 
-# # 	def test_chef_logged_in(self):
-# # 		request = self.factory.get(reverse("menu:menu_new"))
+    def test_create_new_menu_added(self):
+        self.client.force_login(self.test_user)
+        response = self.client.post(
+          reverse("menu:menu_new"),
+          data=self.menu_data,
+          follow=True
+        )
+        self.assertTemplateUsed('menu/menu_detail.html')
+        self.assertContains(response, "Menu added: Summer 2020")
+
+

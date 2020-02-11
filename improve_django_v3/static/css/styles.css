@@ -1,4 +1,149 @@
+* {
+    box-sizing: border-box;
+}
+
+.content_container {
+    max-width: 90%;
+    margin: auto;
+}
+
+.menu {
+    text-align: center;
+    border-bottom: 5px solid white;
+    /*padding: 0 .5rem;*/
+}
+
+.form_style {
+    border: 5px solid;
+}
+
+
 .register_link {
     display: inline-block;
     text-align: right;
 }
+
+.site_title {
+    text-align: center;
+}
+
+body {
+    background: #F74444;
+    font-family: 'Spicy Rice', cursive;
+}
+
+.site_title {
+    margin-top: 80px;
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+a {
+    color: black;
+}
+
+.list_items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu_items {
+    margin: auto;
+    text-align: center;
+    background: snow;
+    box-shadow: 0px 3px 5px -1px black;
+    padding: .75rem;
+}
+
+.info {
+    text-align: center;
+}
+
+.account_options {
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+
+.account_options > a {
+    display: block;
+    width: inherit;
+    background: white;
+    text-align: center;
+    line-height: 2.5;
+}
+
+.account_options > a:hover {
+    background: black;
+    color: #F74444;;
+}
+
+@media screen and (min-width: 600px) {
+    .content_container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    /* MAIN LINKS */
+    .account_options {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        width: 100%;
+        top: 0;
+    }
+
+    .account_options > a {
+        flex: 1;
+        /*display: inline-block;*/
+        text-align: center;
+        line-height: 5;
+        background: white;
+        width: 50%;
+    }
+
+    .menu_items {
+        width: 750px;
+    }
+
+    /* MENU STYLES*/
+    .menu {
+        display: flex;
+        width: 42.5%;
+        margin: 0 2.5%;
+        flex: auto;
+    }
+
+    .menu_details {
+        display: flex;
+        height: 215px;
+        flex-direction: column;
+        justify-content: center
+    }
+
+@media screen and (min-width: 900px) {
+
+    .content_container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    /* MENU STYLES*/
+    .menu {
+        display: flex;
+        width: 27.5%;
+        margin: 0 2.5%;
+        flex: auto;
+    }
+
+    .menu_details {
+        display: flex;
+        height: 200px;
+        flex-direction: column;
+        justify-content: center
+    }
