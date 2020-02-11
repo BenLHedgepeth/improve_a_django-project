@@ -44,7 +44,7 @@ def login_chef(request):
 @login_required
 def logout_chef(request):
     logout(request)
-    messages.info(request, "You are not logged out!")
+    messages.info(request, "You are now logged out!")
     return HttpResponseRedirect(reverse("menu:menu_list"))
     
 
