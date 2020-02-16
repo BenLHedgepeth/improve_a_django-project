@@ -12,8 +12,3 @@ urlpatterns = [
     url(r'^menu/new/$', views.create_new_menu, name='menu_new')
 ]
 
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ]

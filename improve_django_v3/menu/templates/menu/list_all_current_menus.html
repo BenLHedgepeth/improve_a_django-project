@@ -14,12 +14,17 @@
                 {% endif %}
                 <a href="{{ menu.get_absolute_url }}">{{ menu.season }}</a>
             </h1>
-            <p>{{ menu.items.all|join:", "}}</p>
+            <ul class="list_items">    
+            {% for item in menu.items.all %}
+                <li class="menu_item">{{ item }}</li>
+            {% endfor %}
+            </ul>
+            <!-- <p>{{ menu.items.all|join:", "}}</p> -->
             {% if menu.expiration_date %}
                 <p class="date">Expires on: {{ menu.expiration_date|date:"SHORT_DATE_FORMAT" }}</p>
             {% endif %}
             {% if user.is_authenticated %}
-                <a href="">Edit Menu</a> <!-- possibly revise? -->
+                <a href="{% url 'menu:menu_edit' pk=menu.pk %}">Edit Menu</a> <!-- possibly revise? -->
             {% endif %}
         </div>
     {% endfor %}

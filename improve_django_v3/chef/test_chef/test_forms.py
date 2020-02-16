@@ -107,6 +107,5 @@ class TestChefAuthenticationFormWidgets(TestCase):
         cls.password_field_widget = cls.login_form.fields['password'].widget.attrs
 
     def test_chef_authencation_form_field_css_class(self):
-        print(self.login_form.as_p())
         self.assertIn('class', self.username_field_widget)
         self.assertIn('class', self.password_field_widget)

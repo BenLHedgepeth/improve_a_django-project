@@ -39,11 +39,7 @@ class TestMenuFields(TestCase):
             field_kwargs={'validators': [validate_season]}
         )
 
-
 class TestMenuForm(TestCase):
-    '''Validate that an error is raised when an
-    expiration date is defined prior to the created date'''
-
     @classmethod
     def setUpTestData(cls):
         test_chef = User.objects.create_user("test_chef")
@@ -66,6 +62,15 @@ class TestMenuForm(TestCase):
         )
         cls.menu.items.add(cls.item)
 
+
+class TestMenuExpirationAndCurrentDates(TestMenuForm):
+    '''Validate that an error is raised when an
+    expiration date is defined prior to the created date'''
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
         cls.data = {
             'season': 'Late Fall',
             'items': ['Crepe'],
@@ -75,7 +80,32 @@ class TestMenuForm(TestCase):
         cls.menu_form = MenuForm(cls.data)
 
     def test_menu_model_clean(self):
-        self.assertFalse(self.menu_form.is_valid())
         self.assertTrue(
-            self.menu_form.has_error(NON_FIELD_ERRORS, "invalid_expiration")
+            self.menu_form.has_error(
+                NON_FIELD_ERRORS, "invalid_expiration_date"
+            )
+        )
+
+class TestMenuTitleAndExpirationDate(TestMenuForm):
+    '''Validate that an error is raised when the menu's  
+    title contains a year that is postdated relative 
+    to its expiration date.'''
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.data = {
+            'season': 'Late Fall 2021',
+            'items': ['Crepe'],
+            'expiration_date': datetime(2020, 3, 2)
+        }
+
+        cls.menu_form = MenuForm(cls.data)
+
+    def test_menu_clean_expiration_date(self):
+        self.assertTrue(
+            self.menu_form.has_error(
+                NON_FIELD_ERRORS, "post_date_error"
+            )
         )

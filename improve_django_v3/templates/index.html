@@ -14,7 +14,7 @@
             {% if messages %}
                 <ul class="list_items">
                 {% for message in messages %}
-                    <li><h2 class="info">{{ message }}</h2></li>
+                    <li><h2 class="info_message">{{ message }}</h2></li>
                 {% endfor %}
                 </ul>
             {% endif %}
@@ -25,10 +25,10 @@
                 </div>
             {% else %}
                 <div class="account_options">
-                 <a href="{% url 'menu:menu_new' %}" class="top-menu">
-                    <span>Add Menu</span>
-                </a>
-                <a href="{% url 'chef:logout' %}">Log Out</a>
+                    <a href="{% url 'menu:menu_new' %}" class="top-menu">
+                        <span>Add Menu</span>
+                    </a>
+                    <a href="{% url 'chef:logout' %}">Log Out</a>
                 </div>
             {% endif %}
         </div>

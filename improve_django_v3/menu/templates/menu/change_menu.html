@@ -2,21 +2,25 @@
 
 {% block content %}
     <h1>Change menu</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <label for="season">Season:</label>
-        <input type="text" name="season" value="{{ menu.season }}">
-        <br />
-        <label for="items">Items:</label>
-        <select multiple>
-        {% for item in items %}
-            <option value="{{ item }}">{{ item }}</option>
+        {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <h3 class="info_message">{{ error }}</h3>
+            {% endfor %}
         {% endfor %}
-        </select>
-        <br />
-        <label for="expiration_date">Expiration Date:</label>
-        <input type="text" name="expiration_date" value="{{ menu.expiration_date|date:"m/d/Y" }}">
-        <br />
-        <input type="submit" value="Submit" /> 
+        {% for error in form.non_field_errors %}
+            <h3 class="info_error">{{ error }}</h3>
+        {% endfor %}
+    {% endif %}
+    <form action="{% url 'menu:menu_edit' pk=menu.pk %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form_field">
+                {{ field }}
+            </div>
+        {% endfor %}
+        <button class="submit_button">Register</button>
+    </form>
+</div>
     </form>
 {% endblock %}

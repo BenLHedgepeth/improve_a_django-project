@@ -110,6 +110,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+LOGIN_URL = "/chef/login/"
+
 INTERNAL_IPS = [
     '127.0.0.1',
 ]

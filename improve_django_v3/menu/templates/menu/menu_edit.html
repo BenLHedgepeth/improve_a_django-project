@@ -1,11 +1,27 @@
 {% extends 'index.html' %}
 
 {% block content %}
-    <h1>Change menu</h1>
-    <form action="{% url 'menu:menu_new' %}" method="POST" class="menu-form">
+ <div class="form_style">
+ 	<h2 class="new_menu_title">Add A New Menu</h2>
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <h3 class="info_message">{{ error }}</h3>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <h3 class="info_error">{{ error }}</h3>
+        {% endfor %}
+    {% endif %}
+    <form action="{% url 'menu:menu_new' %}" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
+        {% for field in form %}
+            <div class="form_field">
+                {{ field }}
+            </div>
+        {% endfor %}
+        <button class="submit_button">Register</button>
     </form>
+</div>
 {% endblock %}
                 

@@ -7,7 +7,20 @@ from django.forms.widgets import TextInput
 
 class ChefRegisterationForm(UserCreationForm):
 
-    username = forms.CharField(validators=[validate_username])
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = "form_text_widget"
+            field.widget.attrs['placeholder'] = field.label
+
+    username = forms.CharField(label="Username", validators=[validate_username]) # check for coverage
+    password2 = forms.CharField( # check for coverage
+        label="Verify Password",
+        widget=forms.PasswordInput,
+        error_messages={
+            'required': "Provide a password"
+        }
+    )
 
     def clean(self):
         cleaned_data = super().clean()
@@ -15,6 +28,7 @@ class ChefRegisterationForm(UserCreationForm):
         submitted_password = cleaned_data.get('password1')
         
         if submitted_username == submitted_password:
+            '''This error will be propogated to NON_FIELD_ERRORS'''
             raise ValidationError(
                 "Your password cannot be your username.", code="invalid_password"
             )
@@ -28,9 +42,10 @@ class ChefRegisterationForm(UserCreationForm):
 class ChefAuthenticationForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
-        super().__init__(args, kwargs)
+        super().__init__(*args, **kwargs)
         for label, field in self.fields.items():
-            field.widget.attrs['class'] = "form_text_widget" 
+            field.widget.attrs['class'] = "form_text_widget"
+            field.widget.attrs['placeholder'] = label.title()
 
     def clean_username(self):
         username = self.cleaned_data.get('username')

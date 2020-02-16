@@ -16,6 +16,9 @@ class Menu(models.Model):
     def get_absolute_url(self):
         return reverse("menu:menu_detail", kwargs={'pk': self.id})
 
+    class Meta:
+        ordering = ['-expiration_date']
+
 
 class Item(models.Model):
     name = models.CharField(max_length=200, unique=True)
