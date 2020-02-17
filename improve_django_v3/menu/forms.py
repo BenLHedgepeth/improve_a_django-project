@@ -44,10 +44,10 @@ class MenuForm(forms.ModelForm):
         menu_season = self.cleaned_data.get('season', None)
         created_date = cleaned_data['created_date'] = timezone.now()
         expiration_date = cleaned_data.get('expiration_date', None)
-        ''' Accessing 'expiration_date' with bracket notation results in
-        a KeyError. This was fixed by implementing `.get()` and setting 
-        a default value to None upon no there was no key named 
-        'expiration_date'.'''
+        ''' Accessing 'expiration_date' or 'season' with bracket 
+        notation results ina KeyError. This was fixed by implementing 
+        `.get()` and setting a default value to None upon no there 
+        was no key named 'expiration_date'.'''
 
         '''A result of the aforementioned only happens if a user partially
         selects the values required to create a datetime objects. IE. a user
