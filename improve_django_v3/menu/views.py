@@ -55,7 +55,7 @@ def create_new_menu(request):
             ) # display the new menu
     else:
         form = MenuForm() # provide a form to create a new menu 
-    return render(request, 'menu/menu_edit.html', {'form': form})
+    return render(request, 'menu/add_menu.html', {'form': form})
 
 
 @login_required

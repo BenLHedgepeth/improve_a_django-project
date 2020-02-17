@@ -12,7 +12,7 @@
             <h3 class="info_error">{{ error }}</h3>
         {% endfor %}
     {% endif %}
-    <form action="{% url 'menu:menu_edit' pk=menu.pk %}" method="post">
+    <form action="{% url 'menu:add_menu' pk=menu.pk %}" method="post"> # if error change back to "menu:menu_edit"
         {% csrf_token %}
         {% for field in form %}
             <div class="form_field">

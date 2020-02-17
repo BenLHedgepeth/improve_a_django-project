@@ -88,7 +88,7 @@ class TestEditExistingMenu(TestMenuView):
     def test_menu_instance_items_updated(self):
         self.client.force_login(self.test_user)
         response = self.client.post(
-            reverse("menu:menu_edit", kwargs={'pk': 1}),
+            reverse("menu:add_menu", kwargs={'pk': 1}),
             data=self.updated_attrs,
             follow=True
         )
