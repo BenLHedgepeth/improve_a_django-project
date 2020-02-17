@@ -41,7 +41,7 @@ class MenuForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        menu_season = self.cleaned_data['season']
+        menu_season = self.cleaned_data.get('season', None)
         created_date = cleaned_data['created_date'] = timezone.now()
         expiration_date = cleaned_data.get('expiration_date', None)
         ''' Accessing 'expiration_date' with bracket notation results in
