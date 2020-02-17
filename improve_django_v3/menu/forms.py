@@ -22,7 +22,10 @@ class MenuForm(forms.ModelForm):
     season = forms.CharField(
         min_length=4,
         validators=[validate_season],
-        label="Season"
+        label="Season",
+        error_messages={
+            'required': "Provide a seasonal menu title"
+        }
     )
     items = forms.ModelMultipleChoiceField(
         queryset=Item.objects.all(),
@@ -49,6 +52,7 @@ class MenuForm(forms.ModelForm):
         '''A result of the aforementioned only happens if a user partially
         selects the values required to create a datetime objects. IE. a user
         picks a year and a month, but does not select a day.'''
+
 
         if expiration_date:
             if created_date > expiration_date:
